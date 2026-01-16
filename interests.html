@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - İlgi Alanları</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" onclick="utils.navigateTo('dashboard.html')" title="Geri">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="interests-page">
+                    <div class="page-header">
+                        <h1><i class="fas fa-star"></i> İlgi Alanlarınız</h1>
+                        <p>Hangi alanlarda plan yapmak istiyorsunuz?</p>
+                    </div>
+                    
+                    <div class="interests-grid" id="interests-container">
+                        <!-- Interests will be loaded dynamically -->
+                    </div>
+                    
+                    <div class="interests-footer">
+                        <div class="selected-info">
+                            <span id="selected-count">0</span> ilgi alanı seçildi
+                        </div>
+                        <button class="btn btn-primary btn-lg" id="save-interests">
+                            <i class="fas fa-save"></i> Kaydet ve Devam Et
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    
+    <style>
+        .interests-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .interest-item {
+            background: white;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .interest-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .interest-item.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(76, 201, 240, 0.05) 100%);
+        }
+        
+        .interest-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .interest-item.selected .interest-icon {
+            background: linear-gradient(135deg, var(--success) 0%, #22c55e 100%);
+            transform: scale(1.1);
+        }
+        
+        .interest-name {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .interest-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        
+        .interest-check {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+        
+        .interest-item.selected .interest-check {
+            opacity: 1;
+            transform: scale(1);
+            background: var(--success);
+        }
+        
+        .interests-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-top: 2rem;
+        }
+        
+        .selected-info {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+        
+        @media (max-width: 768px) {
+            .interests-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+            
+            .interests-footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .interest-item {
+                padding: 1rem;
+            }
+            
+            .interest-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+                return;
+            }
+            
+            loadInterests();
+        });
+        
+        function loadInterests() {
+            const interests = [
+                { id: 'ders', name: 'Ders', icon: 'fas fa-graduation-cap', desc: 'Ders çalışma ve öğrenme' },
+                { id: 'spor', name: 'Spor', icon: 'fas fa-dumbbell', desc: 'Spor ve fitness' },
+                { id: 'yemek', name: 'Yemek', icon: 'fas fa-utensils', desc: 'Yemek hazırlama' },
+                { id: 'yazılım', name: 'Yazılım', icon: 'fas fa-code', desc: 'Kod yazma ve geliştirme' },
+                { id: 'oyun', name: 'Oyun', icon: 'fas fa-gamepad', desc: 'Oyun ve eğlence' },
+                { id: 'kitap', name: 'Kitap', icon: 'fas fa-book', desc: 'Kitap okuma' },
+                { id: 'sanat', name: 'Sanat', icon: 'fas fa-palette', desc: 'Sanatsal aktiviteler' },
+                { id: 'dinlenme', name: 'Dinlenme', icon: 'fas fa-couch', desc: 'Dinlenme ve rahatlama' }
+            ];
+            
+            const selectedInterests = authManager.currentUser.interests || [];
+            const container = document.getElementById('interests-container');
+            const countElement = document.getElementById('selected-count');
+            
+            if (!container) return;
+            
+            // Update count
+            function updateCount() {
+                if (countElement) {
+                    const selected = container.querySelectorAll('.interest-item.selected').length;
+                    countElement.textContent = selected;
+                }
+            }
+            
+            // Create interest items
+            container.innerHTML = interests.map(interest => `
+                <div class="interest-item ${selectedInterests.includes(interest.id) ? 'selected' : ''}" 
+                     data-interest="${interest.id}">
+                    <div class="interest-icon">
+                        <i class="${interest.icon}"></i>
+                    </div>
+                    <div class="interest-name">${interest.name}</div>
+                    <div class="interest-desc">${interest.desc}</div>
+                    <div class="interest-check">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add click events
+            container.querySelectorAll('.interest-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    updateCount();
+                });
+            });
+            
+            // Save button
+            const saveBtn = document.getElementById('save-interests');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function() {
+                    const selected = Array.from(container.querySelectorAll('.interest-item.selected'))
+                        .map(item => item.dataset.interest);
+                    
+                    if (selected.length === 0) {
+                        utils.showToast('En az bir ilgi alanı seçmelisiniz', 'warning');
+                        return;
+                    }
+                    
+                    authManager.updateUserInterests(selected);
+                    utils.showToast('İlgi alanlarınız kaydedildi', 'success');
+                    
+                    setTimeout(() => {
+                        utils.navigateTo('dashboard.html');
+                    }, 1500);
+                });
+            }
+            
+            updateCount();
+        }
+    </script>
+</body>
+</html>

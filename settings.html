@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - Ayarlar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" onclick="utils.navigateTo('dashboard.html')" title="Geri">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="settings-page">
+                    <div class="page-header">
+                        <h1><i class="fas fa-cog"></i> Ayarlar</h1>
+                        <p>Uygulama ayarlarınızı buradan yönetin</p>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <!-- Genel Ayarlar -->
+                        <div class="settings-card">
+                            <h3><i class="fas fa-sliders-h"></i> Genel Ayarlar</h3>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-palette"></i>
+                                    <div>
+                                        <div class="setting-title">Tema</div>
+                                        <div class="setting-desc">Uygulama temasını seçin</div>
+                                    </div>
+                                </div>
+                                <select class="setting-control" id="theme-select">
+                                    <option value="light">Açık Tema</option>
+                                    <option value="dark">Koyu Tema</option>
+                                    <option value="auto">Sistemle Aynı</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-language"></i>
+                                    <div>
+                                        <div class="setting-title">Dil</div>
+                                        <div class="setting-desc">Uygulama dili</div>
+                                    </div>
+                                </div>
+                                <select class="setting-control" id="language-select">
+                                    <option value="tr">Türkçe</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <div class="setting-title">Saat Formatı</div>
+                                        <div class="setting-desc">Saat gösterim formatı</div>
+                                    </div>
+                                </div>
+                                <select class="setting-control" id="time-format-select">
+                                    <option value="24">24 Saat (14:30)</option>
+                                    <option value="12">12 Saat (2:30 PM)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-calendar-week"></i>
+                                    <div>
+                                        <div class="setting-title">Haftanın İlk Günü</div>
+                                        <div class="setting-desc">Takvimde hafta başlangıcı</div>
+                                    </div>
+                                </div>
+                                <select class="setting-control" id="week-start-select">
+                                    <option value="monday">Pazartesi</option>
+                                    <option value="sunday">Pazar</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Bildirimler -->
+                        <div class="settings-card">
+                            <h3><i class="fas fa-bell"></i> Bildirimler</h3>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <div>
+                                        <div class="setting-title">Plan Hatırlatmaları</div>
+                                        <div class="setting-desc">Yaklaşan planlar için bildirim</div>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="reminders-toggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div>
+                                        <div class="setting-title">Günlük Özet</div>
+                                        <div class="setting-desc">Günlük aktivite özeti</div>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="daily-summary-toggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <div class="setting-title">E-posta Bildirimleri</div>
+                                        <div class="setting-desc">Haftalık rapor e-postaları</div>
+                                    </div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="email-notifications-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Veri Yönetimi -->
+                        <div class="settings-card">
+                            <h3><i class="fas fa-database"></i> Veri Yönetimi</h3>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-download"></i>
+                                    <div>
+                                        <div class="setting-title">Verileri Dışa Aktar</div>
+                                        <div class="setting-desc">Tüm verilerinizi yedekleyin</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" id="export-data-btn">
+                                    <i class="fas fa-file-export"></i> Aktar
+                                </button>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-upload"></i>
+                                    <div>
+                                        <div class="setting-title">Verileri İçe Aktar</div>
+                                        <div class="setting-desc">Yedekten veri yükleyin</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" id="import-data-btn">
+                                    <i class="fas fa-file-import"></i> Yükle
+                                </button>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-label">
+                                    <i class="fas fa-trash"></i>
+                                    <div>
+                                        <div class="setting-title">Verileri Temizle</div>
+                                        <div class="setting-desc">Tüm verilerinizi silin</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" id="clear-data-btn">
+                                    <i class="fas fa-broom"></i> Temizle
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Hakkında -->
+                        <div class="settings-card">
+                            <h3><i class="fas fa-info-circle"></i> Hakkında</h3>
+                            
+                            <div class="about-info">
+                                <div class="app-logo">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="app-info">
+                                    <div class="app-name">SmartTime</div>
+                                    <div class="app-version">v1.0.0</div>
+                                    <div class="app-desc">Akıllı Zaman Yönetimi Uygulaması</div>
+                                </div>
+                            </div>
+                            
+                            <div class="about-links">
+                                <a href="help.html" class="about-link">
+                                    <i class="fas fa-question-circle"></i> Yardım
+                                </a>
+                                <a href="#" class="about-link" onclick="showPrivacyPolicy()">
+                                    <i class="fas fa-shield-alt"></i> Gizlilik Politikası
+                                </a>
+                                <a href="#" class="about-link" onclick="showTerms()">
+                                    <i class="fas fa-file-contract"></i> Kullanım Koşulları
+                                </a>
+                            </div>
+                            
+                            <div class="about-footer">
+                                <p>© 2024 SmartTime. Tüm hakları saklıdır.</p>
+                                <button class="btn btn-primary" onclick="utils.navigateTo('dashboard.html')">
+                                    <i class="fas fa-home"></i> Ana Sayfaya Dön
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <style>
+        .settings-page {
+            padding: 1rem 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--gray-600);
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .settings-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+        
+        .settings-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-300);
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+        
+        .setting-label i {
+            font-size: 1.25rem;
+            color: var(--primary);
+            width: 24px;
+        }
+        
+        .setting-title {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .setting-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+        
+        .setting-control {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            background: white;
+            min-width: 180px;
+        }
+        
+        .about-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+        
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .app-name {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+        
+        .app-version {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin: 0.25rem 0;
+        }
+        
+        .app-desc {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .about-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            color: var(--gray-700);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .about-link:hover {
+            background: var(--gray-200);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .about-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-300);
+        }
+        
+        .about-footer p {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .setting-control {
+                width: 100%;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+                return;
+            }
+            
+            // Load current settings
+            loadSettings();
+            
+            // Event listeners
+            setupEventListeners();
+        });
+        
+        function loadSettings() {
+            // Load user settings
+            const user = authManager.currentUser;
+            const settings = user.settings || {};
+            
+            // Set theme
+            const themeSelect = document.getElementById('theme-select');
+            if (themeSelect) themeSelect.value = settings.theme || 'light';
+            
+            // Set language
+            const languageSelect = document.getElementById('language-select');
+            if (languageSelect) languageSelect.value = settings.language || 'tr';
+            
+            // Set time format
+            const timeFormatSelect = document.getElementById('time-format-select');
+            if (timeFormatSelect) timeFormatSelect.value = settings.timeFormat || '24';
+            
+            // Set week start
+            const weekStartSelect = document.getElementById('week-start-select');
+            if (weekStartSelect) weekStartSelect.value = settings.weekStart || 'monday';
+            
+            // Set toggles
+            const notifications = settings.notifications || {};
+            document.getElementById('reminders-toggle').checked = notifications.reminders !== false;
+            document.getElementById('daily-summary-toggle').checked = notifications.dailySummary !== false;
+            document.getElementById('email-notifications-toggle').checked = notifications.email === true;
+        }
+        
+        function setupEventListeners() {
+            // Save settings on change
+            document.querySelectorAll('.setting-control, .toggle-switch input').forEach(element => {
+                element.addEventListener('change', saveSettings);
+            });
+            
+            // Export data button
+            document.getElementById('export-data-btn').addEventListener('click', exportData);
+            
+            // Import data button
+            document.getElementById('import-data-btn').addEventListener('click', importData);
+            
+            // Clear data button
+            document.getElementById('clear-data-btn').addEventListener('click', clearData);
+        }
+        
+        function saveSettings() {
+            const user = authManager.currentUser;
+            if (!user) return;
+            
+            // Get current settings
+            const settings = {
+                theme: document.getElementById('theme-select').value,
+                language: document.getElementById('language-select').value,
+                timeFormat: document.getElementById('time-format-select').value,
+                weekStart: document.getElementById('week-start-select').value,
+                notifications: {
+                    reminders: document.getElementById('reminders-toggle').checked,
+                    dailySummary: document.getElementById('daily-summary-toggle').checked,
+                    email: document.getElementById('email-notifications-toggle').checked
+                }
+            };
+            
+            // Update user settings
+            user.settings = settings;
+            authManager.currentUser = user;
+            utils.setItem('current_user', user);
+            
+            // Update users list
+            const users = utils.getItem('users') || [];
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                users[userIndex].settings = settings;
+                utils.setItem('users', users);
+            }
+            
+            utils.showToast('Ayarlar kaydedildi', 'success');
+        }
+        
+        function exportData() {
+            const user = authManager.currentUser;
+            if (!user) return;
+            
+            // Prepare data for export
+            const exportData = {
+                user: user,
+                plans: utils.getItem(`plans_${user.id}`) || [],
+                routines: utils.getItem(`routines_${user.id}`) || [],
+                exportDate: new Date().toISOString(),
+                appVersion: '1.0.0'
+            };
+            
+            // Create download
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = `smarttime_backup_${user.id}_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            utils.showToast('Veriler başarıyla dışa aktarıldı', 'success');
+        }
+        
+        function importData() {
+            utils.showToast('İçe aktarma özelliği geliştirme aşamasında', 'info');
+        }
+        
+        function clearData() {
+            if (confirm('TÜM verileriniz (planlar, istatistikler, ayarlar) silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?')) {
+                const user = authManager.currentUser;
+                if (user) {
+                    // Clear user-specific data
+                    utils.removeItem(`plans_${user.id}`);
+                    utils.removeItem(`routines_${user.id}`);
+                    
+                    // Reset user settings
+                    user.settings = {
+                        theme: 'light',
+                        language: 'tr',
+                        timeFormat: '24',
+                        weekStart: 'monday',
+                        notifications: {
+                            reminders: true,
+                            dailySummary: true,
+                            email: false
+                        }
+                    };
+                    
+                    authManager.currentUser = user;
+                    utils.setItem('current_user', user);
+                    
+                    // Update users list
+                    const users = utils.getItem('users') || [];
+                    const userIndex = users.findIndex(u => u.id === user.id);
+                    if (userIndex !== -1) {
+                        users[userIndex].settings = user.settings;
+                        utils.setItem('users', users);
+                    }
+                }
+                
+                utils.showToast('Veriler temizlendi, ayarlar sıfırlandı', 'success');
+                setTimeout(() => {
+                    utils.navigateTo('dashboard.html');
+                }, 1500);
+            }
+        }
+        
+        function showPrivacyPolicy() {
+            alert('Gizlilik Politikası:\n\nBu bir demo uygulamasıdır.\nVeriler sadece tarayıcınızda saklanır.\nHiçbir veri sunucuya gönderilmez.\nUygulama tamamen yerel çalışır.');
+        }
+        
+        function showTerms() {
+            alert('Kullanım Koşulları:\n\n1. Bu bir demo uygulamasıdır.\n2. Gerçek veri kullanılmamaktadır.\n3. Uygulama ücretsizdir.\n4. Tüm hakları saklıdır.\n5. Demo amaçlıdır.');
+        }
+    </script>
+</body>
+</html>

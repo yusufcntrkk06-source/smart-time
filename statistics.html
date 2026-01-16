@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - İstatistikler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" onclick="utils.navigateTo('dashboard.html')" title="Geri">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" id="refresh-stats" title="Yenile">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="statistics-page">
+                    <div class="page-header">
+                        <h1><i class="fas fa-chart-pie"></i> İstatistikler</h1>
+                        <p>Zamanınızı nasıl kullandığınızı görün</p>
+                    </div>
+                    
+                    <!-- Stats Overview -->
+                    <div class="stats-overview">
+                        <div class="stat-card-large">
+                            <div class="stat-icon-large primary">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="stat-info-large">
+                                <div class="stat-value-large" id="total-plans">0</div>
+                                <div class="stat-label-large">Toplam Plan</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-large">
+                            <div class="stat-icon-large success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info-large">
+                                <div class="stat-value-large" id="completion-rate">0%</div>
+                                <div class="stat-label-large">Tamamlama Oranı</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-large">
+                            <div class="stat-icon-large warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info-large">
+                                <div class="stat-value-large" id="total-hours">0s</div>
+                                <div class="stat-label-large">Toplam Süre</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-large">
+                            <div class="stat-icon-large accent">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info-large">
+                                <div class="stat-value-large" id="top-category">-</div>
+                                <div class="stat-label-large">En Aktif Kategori</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3><i class="fas fa-th-large"></i> Kategori Dağılımı</h3>
+                            <div class="chart-container">
+                                <canvas id="categoryChart" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h3><i class="fas fa-calendar-week"></i> Haftalık Aktivite</h3>
+                            <div class="chart-container">
+                                <canvas id="weeklyChart" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Stats -->
+                    <div class="detailed-stats">
+                        <h3><i class="fas fa-list-alt"></i> Detaylı İstatistikler</h3>
+                        <div class="stats-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Plan Sayısı</th>
+                                        <th>Tamamlama</th>
+                                        <th>Toplam Süre</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="category-stats">
+                                    <!-- Category stats will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/plans.js"></script>
+    <script src="js/main.js"></script>
+    
+    <style>
+        .statistics-page {
+            padding: 1rem 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--gray-600);
+        }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card-large {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card-large:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-icon-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-icon-large.primary { background: var(--primary); }
+        .stat-icon-large.success { background: var(--success); }
+        .stat-icon-large.warning { background: var(--warning); }
+        .stat-icon-large.accent { background: var(--accent); }
+        
+        .stat-info-large {
+            flex: 1;
+        }
+        
+        .stat-value-large {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1;
+        }
+        
+        .stat-label-large {
+            font-weight: 500;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+        
+        .chart-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .detailed-stats {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+        
+        .detailed-stats h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .stats-table {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: var(--gray-100);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 2px solid var(--gray-300);
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        tr:hover {
+            background: var(--gray-50);
+        }
+        
+        .category-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--gray-100);
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+        
+        .completion-bar {
+            width: 100px;
+            height: 8px;
+            background: var(--gray-300);
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        
+        .completion-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+                return;
+            }
+            
+            loadStatistics();
+            
+            // Refresh button
+            document.getElementById('refresh-stats').addEventListener('click', loadStatistics);
+        });
+        
+        function loadStatistics() {
+            const plans = window.planManager?.plans || [];
+            
+            // Calculate stats
+            const totalPlans = plans.length;
+            const completedPlans = plans.filter(p => p.completed).length;
+            const completionRate = totalPlans > 0 ? Math.round((completedPlans / totalPlans) * 100) : 0;
+            
+            // Total hours
+            let totalMinutes = 0;
+            plans.forEach(plan => {
+                totalMinutes += utils.calculateDuration(plan.start, plan.end);
+            });
+            const totalHours = Math.round(totalMinutes / 60);
+            
+            // Top category
+            const categories = {};
+            plans.forEach(plan => {
+                categories[plan.category] = (categories[plan.category] || 0) + 1;
+            });
+            
+            let topCategory = '-';
+            let maxCount = 0;
+            Object.keys(categories).forEach(cat => {
+                if (categories[cat] > maxCount) {
+                    maxCount = categories[cat];
+                    topCategory = cat.charAt(0).toUpperCase() + cat.slice(1);
+                }
+            });
+            
+            // Update overview
+            document.getElementById('total-plans').textContent = totalPlans;
+            document.getElementById('completion-rate').textContent = `${completionRate}%`;
+            document.getElementById('total-hours').textContent = `${totalHours}s`;
+            document.getElementById('top-category').textContent = topCategory;
+            
+            // Update category stats table
+            updateCategoryStats(plans, categories);
+            
+            // Draw charts
+            drawCategoryChart(categories);
+            drawWeeklyChart(plans);
+        }
+        
+        function updateCategoryStats(plans, categories) {
+            const tbody = document.getElementById('category-stats');
+            if (!tbody) return;
+            
+            // Category colors and icons
+            const categoryInfo = {
+                'ders': { icon: 'fas fa-graduation-cap', color: '#4361ee' },
+                'spor': { icon: 'fas fa-dumbbell', color: '#4ade80' },
+                'yemek': { icon: 'fas fa-utensils', color: '#f59e0b' },
+                'yazılım': { icon: 'fas fa-code', color: '#8b5cf6' },
+                'oyun': { icon: 'fas fa-gamepad', color: '#ec4899' },
+                'kitap': { icon: 'fas fa-book', color: '#06b6d4' },
+                'sanat': { icon: 'fas fa-palette', color: '#f97316' },
+                'dinlenme': { icon: 'fas fa-couch', color: '#64748b' }
+            };
+            
+            let html = '';
+            
+            Object.keys(categories).sort().forEach(category => {
+                const count = categories[category];
+                const categoryPlans = plans.filter(p => p.category === category);
+                const completed = categoryPlans.filter(p => p.completed).length;
+                const completionPercent = count > 0 ? Math.round((completed / count) * 100) : 0;
+                
+                // Calculate total time for this category
+                let categoryMinutes = 0;
+                categoryPlans.forEach(plan => {
+                    categoryMinutes += utils.calculateDuration(plan.start, plan.end);
+                });
+                const categoryHours = Math.round(categoryMinutes / 60);
+                
+                const info = categoryInfo[category] || { icon: 'fas fa-circle', color: '#64748b' };
+                
+                html += `
+                    <tr>
+                        <td>
+                            <div class="category-badge" style="color: ${info.color}">
+                                <i class="${info.icon}"></i>
+                                ${category.charAt(0).toUpperCase() + category.slice(1)}
+                            </div>
+                        </td>
+                        <td>${count}</td>
+                        <td>
+                            <div class="completion-bar">
+                                <div class="completion-fill" style="width: ${completionPercent}%"></div>
+                            </div>
+                            ${completionPercent}%
+                        </td>
+                        <td>${categoryHours} saat</td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html || '<tr><td colspan="4" style="text-align: center;">Henüz veri yok</td></tr>';
+        }
+        
+        function drawCategoryChart(categories) {
+            const canvas = document.getElementById('categoryChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const labels = Object.keys(categories).map(cat => 
+                cat.charAt(0).toUpperCase() + cat.slice(1)
+            );
+            const data = Object.values(categories);
+            
+            // Colors for categories
+            const colors = {
+                'ders': '#4361ee',
+                'spor': '#4ade80',
+                'yemek': '#f59e0b',
+                'yazılım': '#8b5cf6',
+                'oyun': '#ec4899',
+                'kitap': '#06b6d4',
+                'sanat': '#f97316',
+                'dinlenme': '#64748b'
+            };
+            
+            const backgroundColors = labels.map(label => {
+                const cat = label.toLowerCase();
+                return colors[cat] || '#64748b';
+            });
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw pie chart
+            if (data.length === 0) {
+                ctx.fillStyle = '#f8f9fa';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Veri yok', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+            
+            const total = data.reduce((sum, value) => sum + value, 0);
+            let startAngle = 0;
+            
+            data.forEach((value, index) => {
+                const sliceAngle = (value / total) * 2 * Math.PI;
+                
+                // Draw slice
+                ctx.beginPath();
+                ctx.fillStyle = backgroundColors[index];
+                ctx.moveTo(canvas.width / 2, canvas.height / 2);
+                ctx.arc(canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) / 3, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw label
+                const labelAngle = startAngle + sliceAngle / 2;
+                const labelRadius = Math.min(canvas.width, canvas.height) / 3 * 0.7;
+                const labelX = canvas.width / 2 + Math.cos(labelAngle) * labelRadius;
+                const labelY = canvas.height / 2 + Math.sin(labelAngle) * labelRadius;
+                
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`${Math.round((value / total) * 100)}%`, labelX, labelY);
+                
+                startAngle += sliceAngle;
+            });
+        }
+        
+        function drawWeeklyChart(plans) {
+            const canvas = document.getElementById('weeklyChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Get last 7 days
+            const days = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            const today = new Date();
+            const dayData = Array(7).fill(0);
+            
+            // Count plans for each day of last week
+            plans.forEach(plan => {
+                const planDate = new Date(plan.start);
+                const dayDiff = Math.floor((today - planDate) / (1000 * 60 * 60 * 24));
+                
+                if (dayDiff >= 0 && dayDiff < 7) {
+                    dayData[6 - dayDiff]++; // Reverse order for last 7 days
+                }
+            });
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw bar chart
+            const barWidth = 40;
+            const spacing = 20;
+            const maxValue = Math.max(...dayData, 1);
+            const chartHeight = canvas.height - 50;
+            const startX = 60;
+            
+            // Draw grid
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            
+            // Draw bars and labels
+            dayData.forEach((value, index) => {
+                const x = startX + index * (barWidth + spacing);
+                const barHeight = (value / maxValue) * chartHeight;
+                const y = canvas.height - 30 - barHeight;
+                
+                // Draw bar
+                ctx.fillStyle = '#4361ee';
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Draw value
+                ctx.fillStyle = '#4361ee';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(value, x + barWidth / 2, y - 10);
+                
+                // Draw day label
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText(days[index], x + barWidth / 2, canvas.height - 10);
+            });
+            
+            // Draw Y-axis labels
+            ctx.fillStyle = '#666';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'right';
+            
+            for (let i = 0; i <= 5; i++) {
+                const y = canvas.height - 30 - (i * chartHeight / 5);
+                const value = Math.round((i * maxValue) / 5);
+                ctx.fillText(value, 55, y + 3);
+                
+                // Grid line
+                ctx.beginPath();
+                ctx.moveTo(60, y);
+                ctx.lineTo(canvas.width - 20, y);
+                ctx.stroke();
+            }
+        }
+    </script>
+</body>
+</html>

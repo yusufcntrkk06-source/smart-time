@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - Yardım</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" onclick="utils.navigateTo('dashboard.html')" title="Geri">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="help-page">
+                    <div class="page-header">
+                        <h1><i class="fas fa-question-circle"></i> Yardım Merkezi</h1>
+                        <p>SmartTime kullanımı hakkında yardım alın</p>
+                    </div>
+                    
+                    <div class="help-grid">
+                        <!-- Hızlı Başlangıç -->
+                        <div class="help-card">
+                            <h3><i class="fas fa-rocket"></i> Hızlı Başlangıç</h3>
+                            <div class="help-content">
+                                <div class="help-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>İlgi Alanlarını Seç</h4>
+                                        <p>Dashboard'dan ilgi alanlarınızı seçerek kişiselleştirilmiş bir deneyim elde edin.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>Plan Oluştur</h4>
+                                        <p>"Yeni Plan Ekle" butonuna tıklayarak günlük aktivitelerinizi planlayın.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>Takip Et</h4>
+                                        <p>Planlarınızı tamamlayın ve istatistiklerinizi takip edin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SSS -->
+                        <div class="help-card">
+                            <h3><i class="fas fa-question"></i> Sık Sorulan Sorular</h3>
+                            <div class="faq-list">
+                                <div class="faq-item">
+                                    <button class="faq-question">
+                                        <span>SmartTime nasıl çalışır?</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="faq-answer">
+                                        <p>SmartTime, günlük aktivitelerinizi planlamanızı, takip etmenizi ve analiz etmenizi sağlayan bir zaman yönetimi uygulamasıdır. Tüm veriler tarayıcınızda saklanır.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <button class="faq-question">
+                                        <span>Verilerim nerede saklanıyor?</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="faq-answer">
+                                        <p>Tüm veriler tarayıcınızın localStorage'ında saklanır. Hiçbir veri sunucuya gönderilmez. Verilerinizi "Ayarlar" sayfasından dışa aktarabilirsiniz.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <button class="faq-question">
+                                        <span>Demo hesap nedir?</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="faq-answer">
+                                        <p>Demo hesap, uygulamayı test etmeniz için hazırlanmış bir örnek hesaptır. E-posta: demo@smarttime.com, Şifre: demo123</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="faq-item">
+                                    <button class="faq-question">
+                                        <span>Planlarımı nasıl düzenlerim?</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="faq-answer">
+                                        <p>Plan kartının üzerindeki düzenle butonuna tıklayarak veya takvim üzerinden plana tıklayarak düzenleme yapabilirsiniz.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Özellikler -->
+                        <div class="help-card">
+                            <h3><i class="fas fa-star"></i> Özellikler</h3>
+                            <div class="features-list">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Akıllı Planlama</h4>
+                                        <p>Günlük aktivitelerinizi kolayca planlayın</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Detaylı İstatistikler</h4>
+                                        <p>Zamanınızı nasıl kullandığınızı görün</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Akıllı Öneriler</h4>
+                                        <p>Kişiselleştirilmiş öneriler alın</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="feature-content">
+                                        <h4>Responsive Tasarım</h4>
+                                        <p>Tüm cihazlarda mükemmel çalışır</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- İletişim -->
+                        <div class="help-card">
+                            <h3><i class="fas fa-envelope"></i> İletişim</h3>
+                            <div class="contact-info">
+                                <p>SmartTime bir demo uygulamasıdır. Gerçek bir iletişim adresi bulunmamaktadır.</p>
+                                
+                                <div class="contact-methods">
+                                    <div class="contact-item">
+                                        <i class="fas fa-info-circle"></i>
+                                        <div>
+                                            <div class="contact-label">Uygulama Türü</div>
+                                            <div class="contact-value">Demo / Öğrenme Projesi</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-item">
+                                        <i class="fas fa-code"></i>
+                                        <div>
+                                            <div class="contact-label">Teknoloji</div>
+                                            <div class="contact-value">HTML, CSS, JavaScript</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-item">
+                                        <i class="fas fa-database"></i>
+                                        <div>
+                                            <div class="contact-label">Veri Saklama</div>
+                                            <div class="contact-value">LocalStorage (Tarayıcı)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="demo-note">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p><strong>Not:</strong> Bu bir demo uygulamasıdır. Gerçek veri kullanılmamaktadır.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Geri Bildirim -->
+                    <div class="feedback-section">
+                        <h3><i class="fas fa-comment-dots"></i> Geri Bildirim</h3>
+                        <p>Uygulama hakkında görüşlerinizi paylaşın (demo amaçlı)</p>
+                        
+                        <div class="feedback-form">
+                            <div class="form-group">
+                                <label for="feedback-type">Geri Bildirim Türü</label>
+                                <select id="feedback-type" class="form-control">
+                                    <option>Öneri</option>
+                                    <option>Hata Bildirimi</option>
+                                    <option>Diğer</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="feedback-message">Mesajınız</label>
+                                <textarea id="feedback-message" class="form-control" rows="4" placeholder="Görüşlerinizi buraya yazın..."></textarea>
+                            </div>
+                            
+                            <button class="btn btn-primary" onclick="submitFeedback()">
+                                <i class="fas fa-paper-plane"></i> Gönder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <style>
+        .help-page {
+            padding: 1rem 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--gray-600);
+        }
+        
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .help-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+        
+        .help-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-300);
+        }
+        
+        .help-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .help-step {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .step-content p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            background: none;
+            border: none;
+            text-align: left;
+            font-weight: 500;
+            color: var(--dark);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+        
+        .faq-answer p {
+            padding: 0 0 1rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .feature-content h4 {
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+        
+        .feature-content p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-info > p {
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+        
+        .contact-item i {
+            font-size: 1.25rem;
+            color: var(--primary);
+            width: 24px;
+        }
+        
+        .contact-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+        
+        .contact-value {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .demo-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warning);
+        }
+        
+        .demo-note i {
+            color: var(--warning);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+        
+        .demo-note p {
+            color: var(--gray-700);
+            margin: 0;
+        }
+        
+        .feedback-section {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feedback-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .feedback-section > p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feedback-form {
+            max-width: 600px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+        
+        @media (max-width: 768px) {
+            .help-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+                return;
+            }
+            
+            // Setup FAQ accordion
+            setupFAQ();
+        });
+        
+        function setupFAQ() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    item.classList.toggle('active');
+                });
+            });
+        }
+        
+        function submitFeedback() {
+            const type = document.getElementById('feedback-type').value;
+            const message = document.getElementById('feedback-message').value;
+            
+            if (!message.trim()) {
+                utils.showToast('Lütfen bir mesaj yazın', 'warning');
+                return;
+            }
+            
+            // In a real app, this would send to a server
+            // For demo, just show a message
+            utils.showToast('Geri bildiriminiz için teşekkürler! (Demo)', 'success');
+            
+            // Clear form
+            document.getElementById('feedback-message').value = '';
+        }
+    </script>
+</body>
+</html>

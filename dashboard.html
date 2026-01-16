@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - Ana Sayfa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" id="refresh-dashboard" title="Yenile">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" id="quick-add-plan" title="Hızlı Plan Ekle">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="user-menu" id="user-menu">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <div class="user-info">
+                        <div class="user-name" id="user-name">Kullanıcı</div>
+                        <div class="user-email" id="user-email">email@example.com</div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Overlay (mobile için) -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Sidebar -->
+            <nav class="dashboard-sidebar">
+                <div class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-item active" data-nav="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Ana Sayfa</span>
+                    </a>
+                    <a href="calendar.html" class="nav-item" data-nav="calendar">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Takvim</span>
+                    </a>
+                    <a href="statistics.html" class="nav-item" data-nav="statistics">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>İstatistikler</span>
+                    </a>
+                    <a href="interests.html" class="nav-item" data-nav="interests">
+                        <i class="fas fa-star"></i>
+                        <span>İlgi Alanları</span>
+                    </a>
+                    <a href="settings.html" class="nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Ayarlar</span>
+                    </a>
+
+                    <a href="help.html" class="nav-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Yardım</span>
+                    </a>
+                    <a href="#" class="nav-item" id="logout-btn" data-nav="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Çıkış Yap</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <div class="app-version">v1.0.0</div>
+                </div>
+            </nav>
+            
+            <!-- Main Content Area -->
+            <main class="dashboard-content">
+                <!-- Welcome Banner -->
+                <section class="welcome-banner">
+                    <div class="welcome-text" id="greeting-message">
+                        <h2>Hoş Geldiniz!</h2>
+                        <p>Bugün <span id="today-date"></span></p>
+                    </div>
+                    <button class="btn btn-light" id="add-plan-btn">
+                        <i class="fas fa-plus"></i> Yeni Plan Ekle
+                    </button>
+                </section>
+                
+                <!-- Quick Stats -->
+                <section class="quick-stats" id="quick-stats">
+                    <!-- Stats will be loaded dynamically -->
+                </section>
+                
+                <!-- Main Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Today's Plans -->
+                    <section class="today-plan">
+                        <div class="section-header">
+                            <h3 class="section-title">
+                                <i class="fas fa-calendar-day"></i> Bugünün Planları
+                            </h3>
+                            <span class="badge badge-primary" id="today-plan-count">0</span>
+                        </div>
+                        <div class="today-summary" id="today-summary">
+                            <!-- Today's summary will be loaded here -->
+                        </div>
+                        <div class="plan-list" id="today-plan-list">
+                            <!-- Plans will be loaded dynamically -->
+                        </div>
+                    </section>
+                    
+                    <!-- Interest Cards -->
+                    <section class="interest-cards">
+                        <div class="section-header">
+                            <h3 class="section-title">
+                                <i class="fas fa-th-large"></i> İlgi Alanlarınız
+                            </h3>
+                            <a href="interests.html" class="btn btn-sm btn-outline">
+                                <i class="fas fa-edit"></i> Düzenle
+                            </a>
+                        </div>
+                        <div class="interest-grid" id="interest-cards">
+                            <!-- Interest cards will be loaded dynamically -->
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Second Row -->
+                <div class="dashboard-grid">
+                    <!-- Upcoming Plans -->
+                    <section class="today-plan">
+                        <div class="section-header">
+                            <h3 class="section-title">
+                                <i class="fas fa-calendar-week"></i> Yaklaşan Planlar
+                            </h3>
+                            <a href="calendar.html" class="btn btn-sm btn-outline">
+                                <i class="fas fa-external-link-alt"></i> Tümü
+                            </a>
+                        </div>
+                        <div class="upcoming-plans" id="upcoming-plans">
+                            <!-- Upcoming plans will be loaded here -->
+                        </div>
+                    </section>
+                    
+                    <!-- Recent Activities -->
+                    <section class="today-plan">
+                        <div class="section-header">
+                            <h3 class="section-title">
+                                <i class="fas fa-history"></i> Son Aktiviteler
+                            </h3>
+                            <button class="btn btn-sm btn-outline" id="clear-activities">
+                                <i class="fas fa-trash"></i> Temizle
+                            </button>
+                        </div>
+                        <div class="recent-activities" id="recent-activities">
+                            <!-- Activities will be loaded here -->
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Smart Suggestions -->
+                <section class="smart-suggestions" id="smart-suggestions">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-robot"></i> Akıllı Öneriler
+                        </h3>
+                    </div>
+                    <div class="suggestions-container" id="suggestions-container">
+                        <!-- Suggestions will be loaded here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Plan Modal -->
+    <div class="modal" id="plan-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Yeni Plan Ekle</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="plan-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="plan-title">Plan Başlığı</label>
+                        <input type="text" id="plan-title" name="plan-title" 
+                               placeholder="Örneğin: Matematik çalışması" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plan-category">Kategori</label>
+                        <select id="plan-category" name="plan-category" required>
+                            <option value="">Kategori seçin</option>
+                            <option value="ders">Ders</option>
+                            <option value="spor">Spor</option>
+                            <option value="yemek">Yemek</option>
+                            <option value="yazılım">Yazılım</option>
+                            <option value="oyun">Oyun</option>
+                            <option value="kitap">Kitap</option>
+                            <option value="sanat">Sanat</option>
+                            <option value="dinlenme">Dinlenme</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plan-date">Tarih</label>
+                            <input type="date" id="plan-date" name="plan-date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="plan-start-time">Başlangıç Saati</label>
+                            <input type="time" id="plan-start-time" name="plan-start-time" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="plan-end-time">Bitiş Saati</label>
+                            <input type="time" id="plan-end-time" name="plan-end-time" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plan-description">Açıklama (Opsiyonel)</label>
+                        <textarea id="plan-description" name="plan-description" 
+                                  rows="3" placeholder="Plan hakkında detaylı açıklama..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="utils.hideModal('plan-modal')">
+                        İptal
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="plan-submit-btn">
+                        Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- User Menu Dropdown -->
+    <div class="dropdown-menu" id="user-dropdown" style="display: none;">
+        <a href="#" class="dropdown-item" id="profile-link">
+            <i class="fas fa-user"></i> Profilim
+        </a>
+        <a href="settings.html" class="dropdown-item" data-nav="settings">
+            <i class="fas fa-cog"></i> Ayarlar
+        </a>
+        <a href="#" class="dropdown-item" id="help-link">
+            <i class="fas fa-question-circle"></i> Yardım
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item" id="logout-dropdown-btn">
+            <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+        </a>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/plans.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // User menu dropdown
+        document.getElementById('user-menu').addEventListener('click', function(e) {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            
+            // Position dropdown
+            const rect = this.getBoundingClientRect();
+            dropdown.style.position = 'fixed';
+            dropdown.style.top = (rect.bottom + 5) + 'px';
+            dropdown.style.right = (window.innerWidth - rect.right) + 'px';
+            dropdown.style.minWidth = rect.width + 'px';
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('user-dropdown');
+            const userMenu = document.getElementById('user-menu');
+            
+            if (!userMenu.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Dropdown items
+        document.getElementById('profile-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Profil sayfası yakında eklenecek!');
+        });
+        
+        document.getElementById('help-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Yardım sayfası yakında eklenecek!');
+        });
+        
+        document.getElementById('logout-dropdown-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            authManager.handleLogout(e);
+        });
+        
+        // Quick add plan button
+        document.getElementById('quick-add-plan').addEventListener('click', function() {
+            if (window.planManager) {
+                planManager.showAddPlanModal();
+            }
+        });
+        
+        // Clear activities
+        document.getElementById('clear-activities').addEventListener('click', function() {
+            if (confirm('Son aktiviteleri temizlemek istediğinize emin misiniz?')) {
+                // Clear activities logic here
+                utils.showToast('Aktiviteler temizlendi', 'success');
+                document.getElementById('recent-activities').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <h4>Aktivite Yok</h4>
+                        <p>Yeni aktiviteler burada görünecek</p>
+                    </div>
+                `;
+            }
+        });
+        
+        // Today plan count
+        function updateTodayPlanCount() {
+            const count = document.querySelectorAll('.plan-card').length;
+            document.getElementById('today-plan-count').textContent = count;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('today-date').textContent = today.toLocaleDateString('tr-TR', options);
+            
+            // Check authentication
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+            }
+            
+            // Update plan count after a delay
+            setTimeout(updateTodayPlanCount, 1000);
+        });
+    </script>
+</body>
+</html>

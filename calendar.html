@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTime - Takvim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span>SmartTime</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-icon" onclick="utils.navigateTo('dashboard.html')" title="Geri">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" id="today-btn" title="Bugün">
+                    <i class="fas fa-calendar-day"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="calendar-page">
+                    <!-- Calendar Header -->
+                    <div class="calendar-header">
+                        <div class="calendar-navigation">
+                            <button class="btn btn-outline" id="prev-month">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h2 id="current-month">Ocak 2024</h2>
+                            <button class="btn btn-outline" id="next-month">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="calendar-actions">
+                            <button class="btn btn-primary" id="add-event-btn">
+                                <i class="fas fa-plus"></i> Etkinlik Ekle
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Calendar View -->
+                    <div class="calendar-view">
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Calendar will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Events List -->
+                    <div class="events-sidebar">
+                        <h3><i class="fas fa-list"></i> Bugünün Etkinlikleri</h3>
+                        <div class="events-list" id="today-events">
+                            <!-- Today's events will be loaded here -->
+                        </div>
+                        
+                        <h3><i class="fas fa-calendar-week"></i> Bu Hafta</h3>
+                        <div class="events-list" id="week-events">
+                            <!-- Week events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/plans.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/main.js"></script>
+    
+    <style>
+        .calendar-page {
+            padding: 1rem 0;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .calendar-navigation {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .calendar-view {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--gray-300);
+        }
+        
+        .calendar-day-header {
+            background: var(--gray-100);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .calendar-day {
+            background: white;
+            min-height: 120px;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-200);
+            position: relative;
+        }
+        
+        .calendar-day.other-month {
+            background: var(--gray-50);
+            color: var(--gray-500);
+        }
+        
+        .calendar-day.today {
+            background: rgba(67, 97, 238, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .calendar-day-number {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+        
+        .calendar-day.other-month .calendar-day-number {
+            color: var(--gray-400);
+        }
+        
+        .calendar-event {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            margin-bottom: 0.25rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .events-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+        
+        .events-sidebar h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .events-list {
+            margin-bottom: 2rem;
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .event-item:hover {
+            background: var(--gray-100);
+        }
+        
+        .event-time {
+            min-width: 80px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .event-info {
+            flex: 1;
+        }
+        
+        .event-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .event-category {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .empty-events {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-500);
+        }
+        
+        .empty-events i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--gray-300);
+        }
+        
+        @media (min-width: 992px) {
+            .calendar-page {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+            }
+            
+            .calendar-header {
+                grid-column: 1 / -1;
+            }
+        }
+    </style>
+    
+    <script>
+        // Basit takvim oluştur
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!authManager.currentUser) {
+                utils.navigateTo('index.html');
+                return;
+            }
+            
+            initializeCalendar();
+            loadEvents();
+        });
+        
+        let currentDate = new Date();
+        
+        function initializeCalendar() {
+            updateCalendarTitle();
+            renderCalendar();
+            
+            // Navigation buttons
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateCalendar();
+            });
+            
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateCalendar();
+            });
+            
+            document.getElementById('today-btn').addEventListener('click', () => {
+                currentDate = new Date();
+                updateCalendar();
+            });
+            
+            // Add event button
+            document.getElementById('add-event-btn').addEventListener('click', () => {
+                if (window.planManager) {
+                    planManager.showAddPlanModal();
+                }
+            });
+        }
+        
+        function updateCalendar() {
+            updateCalendarTitle();
+            renderCalendar();
+            loadEvents();
+        }
+        
+        function updateCalendarTitle() {
+            const monthNames = [
+                'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+            ];
+            
+            const title = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            document.getElementById('current-month').textContent = title;
+        }
+        
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            // Day headers
+            const days = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            days.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                grid.appendChild(dayHeader);
+            });
+            
+            // Get first day of month
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const startingDay = firstDay.getDay(); // 0 = Sunday
+            
+            // Adjust for Monday start (1 = Monday)
+            let startOffset = startingDay === 0 ? 6 : startingDay - 1;
+            
+            // Fill previous month days
+            const prevMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+            for (let i = startOffset - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<div class="calendar-day-number">${prevMonthLastDay - i}</div>`;
+                grid.appendChild(day);
+            }
+            
+            // Current month days
+            const today = new Date();
+            for (let i = 1; i <= lastDay.getDate(); i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                
+                // Check if today
+                if (i === today.getDate() && 
+                    currentDate.getMonth() === today.getMonth() && 
+                    currentDate.getFullYear() === today.getFullYear()) {
+                    day.classList.add('today');
+                }
+                
+                day.innerHTML = `<div class="calendar-day-number">${i}</div>`;
+                grid.appendChild(day);
+            }
+            
+            // Fill remaining cells
+            const totalCells = 42; // 6 rows * 7 days
+            const usedCells = startOffset + lastDay.getDate();
+            const remainingCells = totalCells - usedCells;
+            
+            for (let i = 1; i <= remainingCells; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<div class="calendar-day-number">${i}</div>`;
+                grid.appendChild(day);
+            }
+        }
+        
+        function loadEvents() {
+            // Today's events
+            const todayEvents = document.getElementById('today-events');
+            const weekEvents = document.getElementById('week-events');
+            
+            if (!todayEvents || !weekEvents) return;
+            
+            // Get plans from planManager
+            const plans = window.planManager?.plans || [];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const nextWeek = new Date(today);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            
+            // Filter today's events
+            const todayPlans = plans.filter(plan => {
+                const planDate = new Date(plan.start);
+                planDate.setHours(0, 0, 0, 0);
+                return planDate.getTime() === today.getTime();
+            });
+            
+            // Filter this week's events
+            const weekPlans = plans.filter(plan => {
+                const planDate = new Date(plan.start);
+                return planDate >= today && planDate < nextWeek;
+            });
+            
+            // Display today's events
+            if (todayPlans.length === 0) {
+                todayEvents.innerHTML = `
+                    <div class="empty-events">
+                        <i class="fas fa-calendar-plus"></i>
+                        <p>Bugün planınız yok</p>
+                    </div>
+                `;
+            } else {
+                todayEvents.innerHTML = todayPlans.map(plan => `
+                    <div class="event-item" onclick="planManager.editPlan('${plan.id}')">
+                        <div class="event-time">${utils.formatDate(plan.start, 'time')}</div>
+                        <div class="event-info">
+                            <div class="event-title">${utils.escapeHtml(plan.title)}</div>
+                            <div class="event-category">${plan.category}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Display week events
+            if (weekPlans.length === 0) {
+                weekEvents.innerHTML = `
+                    <div class="empty-events">
+                        <i class="fas fa-calendar-week"></i>
+                        <p>Bu hafta planınız yok</p>
+                    </div>
+                `;
+            } else {
+                weekEvents.innerHTML = weekPlans.map(plan => `
+                    <div class="event-item" onclick="planManager.editPlan('${plan.id}')">
+                        <div class="event-time">
+                            ${utils.formatDate(plan.start, 'short')}<br>
+                            ${utils.formatDate(plan.start, 'time')}
+                        </div>
+                        <div class="event-info">
+                            <div class="event-title">${utils.escapeHtml(plan.title)}</div>
+                            <div class="event-category">${plan.category}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+</html>
