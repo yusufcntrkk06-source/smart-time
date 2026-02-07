@@ -314,3 +314,151 @@ label {
         width: 100%;
     }
 }
+
+
+/* ========== THEME STYLES ========== */
+
+/* Mavi Tema (Default - Zaten var) */
+.theme-blue {
+    --primary: #4361ee;
+    --secondary: #4cc9f0;
+    --accent: #7209b7;
+}
+
+/* Kırmızı Tema */
+.theme-red {
+    --primary: #e63946;
+    --secondary: #ff686b;
+    --accent: #ff5d8f;
+    --success: #2a9d8f;
+    --warning: #e9c46a;
+    --danger: #e76f51;
+}
+
+.theme-red .btn-primary {
+    background: linear-gradient(135deg, #e63946 0%, #ff686b 100%);
+}
+
+.theme-red .btn-primary:hover {
+    background: linear-gradient(135deg, #d00000 0%, #e63946 100%);
+}
+
+.theme-red .logo-icon,
+.theme-red .auth-logo,
+.theme-red .stat-icon.primary {
+    background: linear-gradient(135deg, #e63946 0%, #ff686b 100%) !important;
+}
+
+.theme-red .welcome-banner {
+    background: linear-gradient(135deg, #e63946 0%, #ff686b 100%);
+}
+
+/* Neon Tema */
+.theme-neon {
+    --primary: #8a2be2;
+    --secondary: #00ffff;
+    --accent: #ff00ff;
+    --success: #00ff88;
+    --warning: #ffff00;
+    --danger: #ff0066;
+    --light: #0a0a0a;
+    --dark: #ffffff;
+    --gray-100: #1a1a1a;
+    --gray-200: #2a2a2a;
+    --gray-300: #3a3a3a;
+    --gray-400: #555;
+    --gray-500: #777;
+    --gray-600: #999;
+    --gray-700: #bbb;
+    --gray-800: #ddd;
+    --gray-900: #fff;
+}
+
+.theme-neon body {
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+}
+
+.theme-neon .btn-primary {
+    background: linear-gradient(135deg, #8a2be2 0%, #ff00ff 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+.theme-neon .btn-primary:hover {
+    background: linear-gradient(135deg, #7b1fa2 0%, #e600e6 100%);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+    transform: translateY(-2px);
+}
+
+.theme-neon .logo-icon,
+.theme-neon .auth-logo,
+.theme-neon .stat-icon.primary {
+    background: linear-gradient(135deg, #8a2be2 0%, #ff00ff 100%) !important;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
+
+.theme-neon .welcome-banner {
+    background: linear-gradient(135deg, #8a2be2 0%, #ff00ff 100%);
+    color: white;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+}
+
+.theme-neon .dashboard-header {
+    background: rgba(26, 26, 26, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.theme-neon .dashboard-sidebar {
+    background: rgba(26, 26, 26, 0.9);
+    border-right: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.theme-neon .dashboard-content {
+    background: #0a0a0a;
+}
+
+.theme-neon .card,
+.theme-neon .today-plan,
+.theme-neon .interest-cards,
+.theme-neon .settings-card,
+.theme-neon .help-card {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.theme-neon .nav-item:hover,
+.theme-neon .interest-item:hover,
+.theme-neon .plan-card:hover {
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.theme-neon input,
+.theme-neon select,
+.theme-neon textarea {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    color: #ffffff;
+}
+
+.theme-neon input:focus,
+.theme-neon select:focus,
+.theme-neon textarea:focus {
+    border-color: #8a2be2;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+/* Tema geçiş animasyonu */
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body * {
+    transition: background-color 0.5s ease, 
+                border-color 0.5s ease, 
+                color 0.5s ease,
+                box-shadow 0.5s ease;
+}
