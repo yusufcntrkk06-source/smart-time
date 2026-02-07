@@ -3,9 +3,136 @@
 class Utils {
     constructor() {
         this.debugMode = true;
+        this.currentTheme = 'blue';
+        this.currentLanguage = 'tr';
+        this.themes = {
+            blue: {
+                name: 'Mavi Tema',
+                primary: '#4361ee',
+                secondary: '#4cc9f0',
+                accent: '#7209b7',
+                background: '#f8f9fa',
+                card: '#ffffff',
+                text: '#212529'
+            },
+            red: {
+                name: 'Kırmızı Tema',
+                primary: '#e63946',
+                secondary: '#ff686b',
+                accent: '#ff5d8f',
+                background: '#fff5f5',
+                card: '#ffffff',
+                text: '#2d0001'
+            },
+            neon: {
+                name: 'Neon Tema',
+                primary: '#8a2be2',
+                secondary: '#00ffff',
+                accent: '#ff00ff',
+                background: '#0a0a0a',
+                card: '#1a1a1a',
+                text: '#ffffff'
+            }
+        };
     }
 
-    // Log fonksiyonu (debug mod açıkken çalışır)
+    // Tema değiştirme
+    changeTheme(themeName) {
+        if (!this.themes[themeName]) {
+            console.error('Tema bulunamadı:', themeName);
+            return false;
+        }
+        
+        this.currentTheme = themeName;
+        const theme = this.themes[themeName];
+        
+        // CSS değişkenlerini güncelle
+        const root = document.documentElement;
+        root.style.setProperty('--primary', theme.primary);
+        root.style.setProperty('--secondary', theme.secondary);
+        root.style.setProperty('--accent', theme.accent);
+        root.style.setProperty('--light', theme.background);
+        root.style.setProperty('--dark', theme.text);
+        
+        // Body class'ını güncelle
+        document.body.className = '';
+        document.body.classList.add(`theme-${themeName}`);
+        document.body.style.backgroundColor = theme.background;
+        document.body.style.color = theme.text;
+        
+        // LocalStorage'a kaydet
+        this.setItem('theme', themeName);
+        
+        console.log('Tema değiştirildi:', themeName);
+        return true;
+    }
+
+    // Tema yükle
+    loadTheme() {
+        const savedTheme = this.getItem('theme') || 'blue';
+        this.changeTheme(savedTheme);
+        return savedTheme;
+    }
+
+    // Dil desteği (basit)
+    changeLanguage(lang) {
+        this.currentLanguage = lang;
+        this.setItem('language', lang);
+        
+        // Basit dil değişimi
+        if (lang === 'en') {
+            // İngilizce metinleri güncelle
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.dataset.translate;
+                const translations = {
+                    'ana.sayfa': 'Dashboard',
+                    'takvim': 'Calendar',
+                    'istatistikler': 'Statistics',
+                    'ilgi.alanları': 'Interests',
+                    'ayarlar': 'Settings',
+                    'yardım': 'Help',
+                    'çıkış.yap': 'Logout'
+                };
+                if (translations[key]) {
+                    el.textContent = translations[key];
+                }
+            });
+        } else {
+            // Türkçe'ye dön
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.dataset.translate;
+                const translations = {
+                    'ana.sayfa': 'Ana Sayfa',
+                    'takvim': 'Takvim',
+                    'istatistikler': 'İstatistikler',
+                    'ilgi.alanları': 'İlgi Alanları',
+                    'ayarlar': 'Ayarlar',
+                    'yardım': 'Yardım',
+                    'çıkış.yap': 'Çıkış Yap'
+                };
+                if (translations[key]) {
+                    el.textContent = translations[key];
+                }
+            });
+        }
+        
+        return true;
+    }
+
+    // Tercihleri yükle
+    loadPreferences() {
+        this.loadTheme();
+        
+        const savedLang = this.getItem('language') || 'tr';
+        this.changeLanguage(savedLang);
+        
+        console.log('Tercihler yüklendi:', {
+            theme: this.currentTheme,
+            language: this.currentLanguage
+        });
+    }
+
+    // Kalan orijinal fonksiyonlar (değişmeden kalacak)
     log(message, data = null) {
         if (this.debugMode) {
             if (data) {
@@ -16,12 +143,10 @@ class Utils {
         }
     }
 
-    // Error log fonksiyonu
     logError(message, error = null) {
         console.error(`[SmartTime Error] ${message}`, error);
     }
 
-    // LocalStorage yardımcı fonksiyonları
     setItem(key, value) {
         try {
             localStorage.setItem(`smarttime_${key}`, JSON.stringify(value));
@@ -52,9 +177,8 @@ class Utils {
         }
     }
 
-    // Kullanıcı verilerini temizle
     clearUserData() {
-        const keysToKeep = ['debug_mode', 'language'];
+        const keysToKeep = ['debug_mode', 'language', 'theme'];
         const keys = Object.keys(localStorage);
         
         keys.forEach(key => {
@@ -64,7 +188,6 @@ class Utils {
         });
     }
 
-    // Tarih formatlama
     formatDate(date, format = 'short') {
         const d = new Date(date);
         
@@ -99,21 +222,18 @@ class Utils {
         return d.toISOString();
     }
 
-    // Zaman dilimi formatlama
     formatTimeRange(start, end) {
         const startTime = this.formatDate(start, 'time');
         const endTime = this.formatDate(end, 'time');
         return `${startTime} - ${endTime}`;
     }
 
-    // Süre hesaplama (dakika)
     calculateDuration(start, end) {
         const startTime = new Date(start).getTime();
         const endTime = new Date(end).getTime();
         return Math.round((endTime - startTime) / (1000 * 60));
     }
 
-    // Süreyi okunabilir formata çevirme
     formatDuration(minutes) {
         if (minutes < 60) {
             return `${minutes} dakika`;
@@ -126,7 +246,6 @@ class Utils {
         }
     }
 
-    // UUID oluşturma
     generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             const r = Math.random() * 16 | 0;
@@ -135,7 +254,6 @@ class Utils {
         });
     }
 
-    // Kategori ikonu getirme
     getCategoryIcon(category) {
         const icons = {
             'ders': 'fas fa-graduation-cap',
@@ -150,7 +268,6 @@ class Utils {
         return icons[category] || 'fas fa-calendar';
     }
 
-    // Kategori rengi getirme
     getCategoryColor(category) {
         const colors = {
             'ders': '#4361ee',
@@ -165,28 +282,24 @@ class Utils {
         return colors[category] || '#4361ee';
     }
 
-    // Tarih karşılaştırma (bugün mü?)
     isToday(date) {
         const today = new Date();
         const compareDate = new Date(date);
         return today.toDateString() === compareDate.toDateString();
     }
 
-    // Geçmiş tarih kontrolü
     isPast(date) {
         const now = new Date();
         const compareDate = new Date(date);
         return compareDate < now;
     }
 
-    // Gelecek tarih kontrolü
     isFuture(date) {
         const now = new Date();
         const compareDate = new Date(date);
         return compareDate > now;
     }
 
-    // Input validasyonu
     validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -196,7 +309,6 @@ class Utils {
         return password.length >= 6;
     }
 
-    // Modal göster/gizle
     showModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {
@@ -213,9 +325,7 @@ class Utils {
         }
     }
 
-    // Toast mesajı göster
     showToast(message, type = 'info', duration = 3000) {
-        // Toast container oluştur
         let container = document.getElementById('toast-container');
         if (!container) {
             container = document.createElement('div');
@@ -233,7 +343,6 @@ class Utils {
             document.body.appendChild(container);
         }
 
-        // Toast oluştur
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
         toast.style.cssText = `
@@ -248,16 +357,13 @@ class Utils {
             animation: slideInRight 0.3s ease;
         `;
 
-        // Icon
         const icon = document.createElement('i');
         icon.className = this.getToastIcon(type);
         icon.style.color = this.getToastColor(type);
 
-        // Message
         const messageEl = document.createElement('span');
         messageEl.textContent = message;
 
-        // Close button
         const closeBtn = document.createElement('button');
         closeBtn.innerHTML = '&times;';
         closeBtn.style.cssText = `
@@ -277,7 +383,6 @@ class Utils {
         toast.appendChild(closeBtn);
         container.appendChild(toast);
 
-        // Otomatik kapanma
         setTimeout(() => {
             if (toast.parentNode) {
                 toast.style.animation = 'slideOutRight 0.3s ease';
@@ -285,7 +390,6 @@ class Utils {
             }
         }, duration);
 
-        // Animasyonlar
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideInRight {
@@ -332,7 +436,6 @@ class Utils {
         return colors[type] || '#4361ee';
     }
 
-    // Loading göster/gizle
     showLoading(container = document.body) {
         const loading = document.createElement('div');
         loading.className = 'loading-overlay';
@@ -363,17 +466,14 @@ class Utils {
         }
     }
 
-    // Sayfa yönlendirme
     navigateTo(url) {
         window.location.href = url;
     }
 
-    // Back butonu
     goBack() {
         window.history.back();
     }
 
-    // Form verilerini al
     getFormData(formId) {
         const form = document.getElementById(formId);
         if (!form) return {};
@@ -388,20 +488,17 @@ class Utils {
         return data;
     }
 
-    // Safe HTML (XSS koruması)
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
-    // Kısaltılmış metin
     truncateText(text, maxLength = 100) {
         if (text.length <= maxLength) return text;
         return text.substring(0, maxLength) + '...';
     }
 
-    // Rastgele renk oluştur
     getRandomColor() {
         const colors = [
             '#4361ee', '#4cc9f0', '#7209b7', '#4ade80',
