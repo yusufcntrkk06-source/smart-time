@@ -5,6 +5,203 @@ class Utils {
         this.debugMode = true;
         this.currentTheme = 'blue';
         this.currentLanguage = 'tr';
+        
+        // Dil çevirileri
+        this.translations = {
+            tr: {
+                // Genel
+                'app.name': 'SmartTime',
+                'dashboard': 'Ana Sayfa',
+                'calendar': 'Takvim',
+                'statistics': 'İstatistikler',
+                'interests': 'İlgi Alanları',
+                'settings': 'Ayarlar',
+                'help': 'Yardım',
+                'logout': 'Çıkış Yap',
+                'save': 'Kaydet',
+                'cancel': 'İptal',
+                'add': 'Ekle',
+                'edit': 'Düzenle',
+                'delete': 'Sil',
+                'loading': 'Yükleniyor...',
+                'today': 'Bugün',
+                'tomorrow': 'Yarın',
+                'yesterday': 'Dün',
+                
+                // Dashboard
+                'add.plan': 'Yeni Plan Ekle',
+                'today.plans': 'Bugünün Planları',
+                'upcoming.plans': 'Yaklaşan Planlar',
+                'recent.activities': 'Son Aktiviteler',
+                'smart.suggestions': 'Akıllı Öneriler',
+                'no.plans': 'Planınız Yok',
+                'add.first.plan': 'İlk Planınızı Ekleyin',
+                'total.plans': 'Toplam Plan',
+                'completed': 'Tamamlanan',
+                'pending': 'Bekleyen',
+                'total.duration': 'Toplam Süre',
+                
+                // Auth
+                'login': 'Giriş Yap',
+                'register': 'Kayıt Ol',
+                'email': 'E-posta',
+                'password': 'Şifre',
+                'remember.me': 'Beni hatırla',
+                'forgot.password': 'Şifremi unuttum?',
+                'no.account': 'Hesabınız yok mu?',
+                'has.account': 'Zaten hesabınız var mı?',
+                'name': 'Ad Soyad',
+                'confirm.password': 'Şifreyi Onayla',
+                'terms': 'Kullanım koşullarını kabul ediyorum',
+                
+                // Settings
+                'theme': 'Tema',
+                'language': 'Dil',
+                'time.format': 'Saat Formatı',
+                'week.start': 'Haftanın İlk Günü',
+                'notifications': 'Bildirimler',
+                'plan.reminders': 'Plan Hatırlatmaları',
+                'daily.summary': 'Günlük Özet',
+                'email.notifications': 'E-posta Bildirimleri',
+                'data.management': 'Veri Yönetimi',
+                'export.data': 'Verileri Dışa Aktar',
+                'import.data': 'Verileri İçe Aktar',
+                'clear.data': 'Verileri Temizle',
+                'about': 'Hakkında',
+                'privacy.policy': 'Gizlilik Politikası',
+                'terms.conditions': 'Kullanım Koşulları',
+                
+                // Plan Modal
+                'plan.title': 'Plan Başlığı',
+                'category': 'Kategori',
+                'date': 'Tarih',
+                'start.time': 'Başlangıç Saati',
+                'end.time': 'Bitiş Saati',
+                'description': 'Açıklama',
+                'optional': 'Opsiyonel',
+                
+                // Categories
+                'category.ders': 'Ders',
+                'category.spor': 'Spor',
+                'category.yemek': 'Yemek',
+                'category.yazılım': 'Yazılım',
+                'category.oyun': 'Oyun',
+                'category.kitap': 'Kitap',
+                'category.sanat': 'Sanat',
+                'category.dinlenme': 'Dinlenme',
+                
+                // Messages
+                'welcome': 'Hoş Geldiniz',
+                'good.morning': 'Günaydın',
+                'good.afternoon': 'İyi günler',
+                'good.evening': 'İyi akşamlar',
+                'saved.successfully': 'Başarıyla kaydedildi',
+                'deleted.successfully': 'Başarıyla silindi',
+                'updated.successfully': 'Başarıyla güncellendi',
+                'error.occurred': 'Bir hata oluştu',
+                'are.you.sure': 'Emin misiniz?',
+                'yes': 'Evet',
+                'no': 'Hayır'
+            },
+            
+            en: {
+                // General
+                'app.name': 'SmartTime',
+                'dashboard': 'Dashboard',
+                'calendar': 'Calendar',
+                'statistics': 'Statistics',
+                'interests': 'Interests',
+                'settings': 'Settings',
+                'help': 'Help',
+                'logout': 'Logout',
+                'save': 'Save',
+                'cancel': 'Cancel',
+                'add': 'Add',
+                'edit': 'Edit',
+                'delete': 'Delete',
+                'loading': 'Loading...',
+                'today': 'Today',
+                'tomorrow': 'Tomorrow',
+                'yesterday': 'Yesterday',
+                
+                // Dashboard
+                'add.plan': 'Add New Plan',
+                'today.plans': "Today's Plans",
+                'upcoming.plans': 'Upcoming Plans',
+                'recent.activities': 'Recent Activities',
+                'smart.suggestions': 'Smart Suggestions',
+                'no.plans': 'No Plans',
+                'add.first.plan': 'Add Your First Plan',
+                'total.plans': 'Total Plans',
+                'completed': 'Completed',
+                'pending': 'Pending',
+                'total.duration': 'Total Duration',
+                
+                // Auth
+                'login': 'Login',
+                'register': 'Register',
+                'email': 'Email',
+                'password': 'Password',
+                'remember.me': 'Remember me',
+                'forgot.password': 'Forgot password?',
+                'no.account': "Don't have an account?",
+                'has.account': 'Already have an account?',
+                'name': 'Full Name',
+                'confirm.password': 'Confirm Password',
+                'terms': 'I accept the terms and conditions',
+                
+                // Settings
+                'theme': 'Theme',
+                'language': 'Language',
+                'time.format': 'Time Format',
+                'week.start': 'Week Start Day',
+                'notifications': 'Notifications',
+                'plan.reminders': 'Plan Reminders',
+                'daily.summary': 'Daily Summary',
+                'email.notifications': 'Email Notifications',
+                'data.management': 'Data Management',
+                'export.data': 'Export Data',
+                'import.data': 'Import Data',
+                'clear.data': 'Clear Data',
+                'about': 'About',
+                'privacy.policy': 'Privacy Policy',
+                'terms.conditions': 'Terms and Conditions',
+                
+                // Plan Modal
+                'plan.title': 'Plan Title',
+                'category': 'Category',
+                'date': 'Date',
+                'start.time': 'Start Time',
+                'end.time': 'End Time',
+                'description': 'Description',
+                'optional': 'Optional',
+                
+                // Categories
+                'category.ders': 'Study',
+                'category.spor': 'Sports',
+                'category.yemek': 'Food',
+                'category.yazılım': 'Software',
+                'category.oyun': 'Game',
+                'category.kitap': 'Book',
+                'category.sanat': 'Art',
+                'category.dinlenme': 'Rest',
+                
+                // Messages
+                'welcome': 'Welcome',
+                'good.morning': 'Good Morning',
+                'good.afternoon': 'Good Afternoon',
+                'good.evening': 'Good Evening',
+                'saved.successfully': 'Saved successfully',
+                'deleted.successfully': 'Deleted successfully',
+                'updated.successfully': 'Updated successfully',
+                'error.occurred': 'An error occurred',
+                'are.you.sure': 'Are you sure?',
+                'yes': 'Yes',
+                'no': 'No'
+            }
+        };
+        
+        // Temalar
         this.themes = {
             blue: {
                 name: 'Mavi Tema',
@@ -36,6 +233,105 @@ class Utils {
         };
     }
 
+    // Dil değiştirme (TAM ÇALIŞAN)
+    changeLanguage(lang) {
+        if (!this.translations[lang]) {
+            console.error('Dil bulunamadı:', lang);
+            return false;
+        }
+        
+        this.currentLanguage = lang;
+        this.setItem('language', lang);
+        
+        // Tüm sayfadaki metinleri güncelle
+        this.updatePageTexts();
+        
+        // Kullanıcı ayarlarını güncelle
+        const user = this.getItem('current_user');
+        if (user) {
+            user.settings = user.settings || {};
+            user.settings.language = lang;
+            this.setItem('current_user', user);
+            
+            // Users listesini de güncelle
+            const users = this.getItem('users') || [];
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                users[userIndex].settings = user.settings;
+                this.setItem('users', users);
+            }
+        }
+        
+        console.log('Dil değiştirildi:', lang);
+        return true;
+    }
+
+    // Sayfa metinlerini güncelle
+    updatePageTexts() {
+        const lang = this.currentLanguage;
+        const t = this.translations[lang];
+        
+        if (!t) return;
+        
+        // Dashboard sayfası metinleri
+        this.updateElementText('add-plan-btn', t['add.plan']);
+        this.updateElementText('today-plans-title', t['today.plans']);
+        this.updateElementText('upcoming-plans-title', t['upcoming.plans']);
+        this.updateElementText('recent-activities-title', t['recent.activities']);
+        this.updateElementText('smart-suggestions-title', t['smart.suggestions']);
+        
+        // Sidebar metinleri
+        this.updateElementText('nav-dashboard', t['dashboard']);
+        this.updateElementText('nav-calendar', t['calendar']);
+        this.updateElementText('nav-statistics', t['statistics']);
+        this.updateElementText('nav-interests', t['interests']);
+        this.updateElementText('nav-settings', t['settings']);
+        this.updateElementText('nav-help', t['help']);
+        this.updateElementText('nav-logout', t['logout']);
+        
+        // Modal metinleri
+        this.updateElementText('modal-title-add', t['add.plan']);
+        this.updateElementText('plan-title-label', t['plan.title']);
+        this.updateElementText('plan-category-label', t['category']);
+        this.updateElementText('plan-date-label', t['date']);
+        this.updateElementText('plan-start-label', t['start.time']);
+        this.updateElementText('plan-end-label', t['end.time']);
+        this.updateElementText('plan-desc-label', t['description'] + ' (' + t['optional'] + ')');
+        
+        // Settings sayfası metinleri
+        this.updateElementText('settings-title', t['settings']);
+        this.updateElementText('theme-label', t['theme']);
+        this.updateElementText('language-label', t['language']);
+        this.updateElementText('time-format-label', t['time.format']);
+        this.updateElementText('week-start-label', t['week.start']);
+        this.updateElementText('notifications-title', t['notifications']);
+        this.updateElementText('reminders-label', t['plan.reminders']);
+        this.updateElementText('daily-summary-label', t['daily.summary']);
+        this.updateElementText('email-notifications-label', t['email.notifications']);
+        this.updateElementText('data-management-title', t['data.management']);
+        this.updateElementText('export-data-btn', t['export.data']);
+        this.updateElementText('import-data-btn', t['import.data']);
+        this.updateElementText('clear-data-btn', t['clear.data']);
+        this.updateElementText('about-title', t['about']);
+        
+        // Toast mesajlarını da güncelle
+        this.showToast(`${lang === 'tr' ? 'Dil Türkçe olarak değiştirildi' : 'Language changed to English'}`, 'success');
+    }
+
+    // Element metnini güncelle
+    updateElementText(elementId, text) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = text;
+        }
+    }
+
+    // Çeviri alma fonksiyonu
+    t(key) {
+        const lang = this.currentLanguage;
+        return this.translations[lang]?.[key] || key;
+    }
+
     // Tema değiştirme
     changeTheme(themeName) {
         if (!this.themes[themeName]) {
@@ -63,7 +359,24 @@ class Utils {
         // LocalStorage'a kaydet
         this.setItem('theme', themeName);
         
+        // Kullanıcı ayarlarını güncelle
+        const user = this.getItem('current_user');
+        if (user) {
+            user.settings = user.settings || {};
+            user.settings.theme = themeName;
+            this.setItem('current_user', user);
+            
+            // Users listesini de güncelle
+            const users = this.getItem('users') || [];
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                users[userIndex].settings = user.settings;
+                this.setItem('users', users);
+            }
+        }
+        
         console.log('Tema değiştirildi:', themeName);
+        this.showToast(`${theme.name} aktif edildi`, 'success');
         return true;
     }
 
@@ -72,51 +385,6 @@ class Utils {
         const savedTheme = this.getItem('theme') || 'blue';
         this.changeTheme(savedTheme);
         return savedTheme;
-    }
-
-    // Dil desteği (basit)
-    changeLanguage(lang) {
-        this.currentLanguage = lang;
-        this.setItem('language', lang);
-        
-        // Basit dil değişimi
-        if (lang === 'en') {
-            // İngilizce metinleri güncelle
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.dataset.translate;
-                const translations = {
-                    'ana.sayfa': 'Dashboard',
-                    'takvim': 'Calendar',
-                    'istatistikler': 'Statistics',
-                    'ilgi.alanları': 'Interests',
-                    'ayarlar': 'Settings',
-                    'yardım': 'Help',
-                    'çıkış.yap': 'Logout'
-                };
-                if (translations[key]) {
-                    el.textContent = translations[key];
-                }
-            });
-        } else {
-            // Türkçe'ye dön
-            document.querySelectorAll('[data-translate]').forEach(el => {
-                const key = el.dataset.translate;
-                const translations = {
-                    'ana.sayfa': 'Ana Sayfa',
-                    'takvim': 'Takvim',
-                    'istatistikler': 'İstatistikler',
-                    'ilgi.alanları': 'İlgi Alanları',
-                    'ayarlar': 'Ayarlar',
-                    'yardım': 'Yardım',
-                    'çıkış.yap': 'Çıkış Yap'
-                };
-                if (translations[key]) {
-                    el.textContent = translations[key];
-                }
-            });
-        }
-        
-        return true;
     }
 
     // Tercihleri yükle
@@ -236,13 +504,19 @@ class Utils {
 
     formatDuration(minutes) {
         if (minutes < 60) {
-            return `${minutes} dakika`;
+            return `${minutes} ${this.currentLanguage === 'tr' ? 'dakika' : 'minutes'}`;
         } else {
             const hours = Math.floor(minutes / 60);
             const remainingMinutes = minutes % 60;
-            return remainingMinutes > 0 
-                ? `${hours} saat ${remainingMinutes} dakika`
-                : `${hours} saat`;
+            if (this.currentLanguage === 'tr') {
+                return remainingMinutes > 0 
+                    ? `${hours} saat ${remainingMinutes} dakika`
+                    : `${hours} saat`;
+            } else {
+                return remainingMinutes > 0 
+                    ? `${hours} hours ${remainingMinutes} minutes`
+                    : `${hours} hours`;
+            }
         }
     }
 
@@ -270,244 +544,4 @@ class Utils {
 
     getCategoryColor(category) {
         const colors = {
-            'ders': '#4361ee',
-            'spor': '#4ade80',
-            'yemek': '#f59e0b',
-            'yazılım': '#8b5cf6',
-            'oyun': '#ec4899',
-            'kitap': '#06b6d4',
-            'sanat': '#f97316',
-            'dinlenme': '#64748b'
-        };
-        return colors[category] || '#4361ee';
-    }
-
-    isToday(date) {
-        const today = new Date();
-        const compareDate = new Date(date);
-        return today.toDateString() === compareDate.toDateString();
-    }
-
-    isPast(date) {
-        const now = new Date();
-        const compareDate = new Date(date);
-        return compareDate < now;
-    }
-
-    isFuture(date) {
-        const now = new Date();
-        const compareDate = new Date(date);
-        return compareDate > now;
-    }
-
-    validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    validatePassword(password) {
-        return password.length >= 6;
-    }
-
-    showModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    hideModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    }
-
-    showToast(message, type = 'info', duration = 3000) {
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            container.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                max-width: 350px;
-            `;
-            document.body.appendChild(container);
-        }
-
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.style.cssText = `
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            border-left: 4px solid ${this.getToastColor(type)};
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: slideInRight 0.3s ease;
-        `;
-
-        const icon = document.createElement('i');
-        icon.className = this.getToastIcon(type);
-        icon.style.color = this.getToastColor(type);
-
-        const messageEl = document.createElement('span');
-        messageEl.textContent = message;
-
-        const closeBtn = document.createElement('button');
-        closeBtn.innerHTML = '&times;';
-        closeBtn.style.cssText = `
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--gray-500);
-            cursor: pointer;
-            margin-left: auto;
-            padding: 0;
-            line-height: 1;
-        `;
-        closeBtn.onclick = () => toast.remove();
-
-        toast.appendChild(icon);
-        toast.appendChild(messageEl);
-        toast.appendChild(closeBtn);
-        container.appendChild(toast);
-
-        setTimeout(() => {
-            if (toast.parentNode) {
-                toast.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }
-        }, duration);
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    getToastIcon(type) {
-        const icons = {
-            'success': 'fas fa-check-circle',
-            'error': 'fas fa-exclamation-circle',
-            'warning': 'fas fa-exclamation-triangle',
-            'info': 'fas fa-info-circle'
-        };
-        return icons[type] || 'fas fa-info-circle';
-    }
-
-    getToastColor(type) {
-        const colors = {
-            'success': '#4ade80',
-            'error': '#f87171',
-            'warning': '#fbbf24',
-            'info': '#4361ee'
-        };
-        return colors[type] || '#4361ee';
-    }
-
-    showLoading(container = document.body) {
-        const loading = document.createElement('div');
-        loading.className = 'loading-overlay';
-        loading.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9998;
-        `;
-
-        const spinner = document.createElement('div');
-        spinner.className = 'spinner spinner-large';
-        loading.appendChild(spinner);
-
-        container.appendChild(loading);
-        return loading;
-    }
-
-    hideLoading(loadingElement) {
-        if (loadingElement && loadingElement.parentNode) {
-            loadingElement.parentNode.removeChild(loadingElement);
-        }
-    }
-
-    navigateTo(url) {
-        window.location.href = url;
-    }
-
-    goBack() {
-        window.history.back();
-    }
-
-    getFormData(formId) {
-        const form = document.getElementById(formId);
-        if (!form) return {};
-
-        const formData = new FormData(form);
-        const data = {};
-        
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-
-        return data;
-    }
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    truncateText(text, maxLength = 100) {
-        if (text.length <= maxLength) return text;
-        return text.substring(0, maxLength) + '...';
-    }
-
-    getRandomColor() {
-        const colors = [
-            '#4361ee', '#4cc9f0', '#7209b7', '#4ade80',
-            '#fbbf24', '#f87171', '#8b5cf6', '#06b6d4',
-            '#f97316', '#ec4899', '#64748b', '#22c55e'
-        ];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
-}
-
-// Global instance oluştur
-window.utils = new Utils();
+ 
