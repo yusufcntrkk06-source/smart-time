@@ -48,9 +48,9 @@
                                     </div>
                                 </div>
                                 <select class="setting-control" id="theme-select">
-                                    <option value="light">Açık Tema</option>
-                                    <option value="dark">Koyu Tema</option>
-                                    <option value="auto">Sistemle Aynı</option>
+                                    <option value="blue">Mavi Tema (Varsayılan)</option>
+                                    <option value="red">Kırmızı Tema</option>
+                                    <option value="neon">Neon Tema</option>
                                 </select>
                             </div>
                             
@@ -230,6 +230,7 @@
 
     <script src="js/utils.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
     
     <style>
         .settings-page {
@@ -315,6 +316,11 @@
             border-radius: var(--border-radius);
             background: white;
             min-width: 180px;
+            cursor: pointer;
+        }
+        
+        .setting-control:hover {
+            border-color: var(--primary);
         }
         
         .about-info {
@@ -411,40 +417,52 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (!authManager.currentUser) {
-                utils.navigateTo('index.html');
+            // Auth kontrolü (settings sayfası için gerekli değil ama güvenlik için)
+            if (!utils.getItem('current_user') && window.location.pathname.includes('settings.html')) {
+                // Eğer kullanıcı giriş yapmamışsa dashboard'a yönlendir
+                utils.navigateTo('dashboard.html');
                 return;
             }
             
-            // Load current settings
+            // Mevcut ayarları yükle
             loadSettings();
             
-            // Event listeners
+            // Event listener'ları kur
             setupEventListeners();
         });
         
         function loadSettings() {
-            // Load user settings
-            const user = authManager.currentUser;
-            const settings = user.settings || {};
+            // Kullanıcı ayarlarını yükle
+            const user = utils.getItem('current_user');
+            const settings = user?.settings || {};
             
-            // Set theme
+            // Tema seçimi
             const themeSelect = document.getElementById('theme-select');
-            if (themeSelect) themeSelect.value = settings.theme || 'light';
+            if (themeSelect) {
+                // Mevcut temayı al (utils'den veya kullanıcı ayarlarından)
+                const currentTheme = utils?.currentTheme || settings.theme || 'blue';
+                themeSelect.value = currentTheme;
+            }
             
-            // Set language
+            // Dil seçimi
             const languageSelect = document.getElementById('language-select');
-            if (languageSelect) languageSelect.value = settings.language || 'tr';
+            if (languageSelect) {
+                languageSelect.value = settings.language || 'tr';
+            }
             
-            // Set time format
+            // Saat formatı
             const timeFormatSelect = document.getElementById('time-format-select');
-            if (timeFormatSelect) timeFormatSelect.value = settings.timeFormat || '24';
+            if (timeFormatSelect) {
+                timeFormatSelect.value = settings.timeFormat || '24';
+            }
             
-            // Set week start
+            // Hafta başlangıcı
             const weekStartSelect = document.getElementById('week-start-select');
-            if (weekStartSelect) weekStartSelect.value = settings.weekStart || 'monday';
+            if (weekStartSelect) {
+                weekStartSelect.value = settings.weekStart || 'monday';
+            }
             
-            // Set toggles
+            // Bildirim toggles
             const notifications = settings.notifications || {};
             document.getElementById('reminders-toggle').checked = notifications.reminders !== false;
             document.getElementById('daily-summary-toggle').checked = notifications.dailySummary !== false;
@@ -452,131 +470,10 @@
         }
         
         function setupEventListeners() {
-            // Save settings on change
-            document.querySelectorAll('.setting-control, .toggle-switch input').forEach(element => {
-                element.addEventListener('change', saveSettings);
-            });
-            
-            // Export data button
-            document.getElementById('export-data-btn').addEventListener('click', exportData);
-            
-            // Import data button
-            document.getElementById('import-data-btn').addEventListener('click', importData);
-            
-            // Clear data button
-            document.getElementById('clear-data-btn').addEventListener('click', clearData);
-        }
-        
-        function saveSettings() {
-            const user = authManager.currentUser;
-            if (!user) return;
-            
-            // Get current settings
-            const settings = {
-                theme: document.getElementById('theme-select').value,
-                language: document.getElementById('language-select').value,
-                timeFormat: document.getElementById('time-format-select').value,
-                weekStart: document.getElementById('week-start-select').value,
-                notifications: {
-                    reminders: document.getElementById('reminders-toggle').checked,
-                    dailySummary: document.getElementById('daily-summary-toggle').checked,
-                    email: document.getElementById('email-notifications-toggle').checked
-                }
-            };
-            
-            // Update user settings
-            user.settings = settings;
-            authManager.currentUser = user;
-            utils.setItem('current_user', user);
-            
-            // Update users list
-            const users = utils.getItem('users') || [];
-            const userIndex = users.findIndex(u => u.id === user.id);
-            if (userIndex !== -1) {
-                users[userIndex].settings = settings;
-                utils.setItem('users', users);
-            }
-            
-            utils.showToast('Ayarlar kaydedildi', 'success');
-        }
-        
-        function exportData() {
-            const user = authManager.currentUser;
-            if (!user) return;
-            
-            // Prepare data for export
-            const exportData = {
-                user: user,
-                plans: utils.getItem(`plans_${user.id}`) || [],
-                routines: utils.getItem(`routines_${user.id}`) || [],
-                exportDate: new Date().toISOString(),
-                appVersion: '1.0.0'
-            };
-            
-            // Create download
-            const dataStr = JSON.stringify(exportData, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const exportFileDefaultName = `smarttime_backup_${user.id}_${new Date().toISOString().split('T')[0]}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-            
-            utils.showToast('Veriler başarıyla dışa aktarıldı', 'success');
-        }
-        
-        function importData() {
-            utils.showToast('İçe aktarma özelliği geliştirme aşamasında', 'info');
-        }
-        
-        function clearData() {
-            if (confirm('TÜM verileriniz (planlar, istatistikler, ayarlar) silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?')) {
-                const user = authManager.currentUser;
-                if (user) {
-                    // Clear user-specific data
-                    utils.removeItem(`plans_${user.id}`);
-                    utils.removeItem(`routines_${user.id}`);
-                    
-                    // Reset user settings
-                    user.settings = {
-                        theme: 'light',
-                        language: 'tr',
-                        timeFormat: '24',
-                        weekStart: 'monday',
-                        notifications: {
-                            reminders: true,
-                            dailySummary: true,
-                            email: false
-                        }
-                    };
-                    
-                    authManager.currentUser = user;
-                    utils.setItem('current_user', user);
-                    
-                    // Update users list
-                    const users = utils.getItem('users') || [];
-                    const userIndex = users.findIndex(u => u.id === user.id);
-                    if (userIndex !== -1) {
-                        users[userIndex].settings = user.settings;
-                        utils.setItem('users', users);
-                    }
-                }
-                
-                utils.showToast('Veriler temizlendi, ayarlar sıfırlandı', 'success');
-                setTimeout(() => {
-                    utils.navigateTo('dashboard.html');
-                }, 1500);
-            }
-        }
-        
-        function showPrivacyPolicy() {
-            alert('Gizlilik Politikası:\n\nBu bir demo uygulamasıdır.\nVeriler sadece tarayıcınızda saklanır.\nHiçbir veri sunucuya gönderilmez.\nUygulama tamamen yerel çalışır.');
-        }
-        
-        function showTerms() {
-            alert('Kullanım Koşulları:\n\n1. Bu bir demo uygulamasıdır.\n2. Gerçek veri kullanılmamaktadır.\n3. Uygulama ücretsizdir.\n4. Tüm hakları saklıdır.\n5. Demo amaçlıdır.');
-        }
-    </script>
-</body>
-</html>
+            // Tema değişimi
+            const themeSelect = document.getElementById('theme-select');
+            if (themeSelect) {
+                themeSelect.addEventListener('change', function() {
+                    const theme = this.value;
+                    if (window.utils && typeof utils.changeTheme === 'function') {
+       
