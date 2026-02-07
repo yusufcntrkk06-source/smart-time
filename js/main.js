@@ -13,6 +13,11 @@ class SmartTimeApp {
         // Global değişkenleri tanımla
         window.smartTimeApp = this;
         
+        // Tema ve dil tercihlerini yükle (YENİ EKLENDİ)
+        if (window.utils && typeof utils.loadPreferences === 'function') {
+            utils.loadPreferences();
+        }
+        
         // Sayfa tipini belirle
         this.detectPageType();
         
@@ -44,6 +49,10 @@ class SmartTimeApp {
             this.currentPage = 'statistics';
         } else if (pageName.includes('calendar.html')) {
             this.currentPage = 'calendar';
+        } else if (pageName.includes('settings.html')) {
+            this.currentPage = 'settings';
+        } else if (pageName.includes('help.html')) {
+            this.currentPage = 'help';
         }
         
         console.log('[SmartTime] Sayfa tespit edildi:', this.currentPage);
@@ -51,8 +60,10 @@ class SmartTimeApp {
 
     // Kimlik doğrulama kontrolü
     async checkAuthentication() {
-        // Auth sayfasında isek kontrol etme
-        if (this.currentPage === 'auth') return true;
+        // Auth, settings ve help sayfalarında kontrol etme
+        if (this.currentPage === 'auth' || 
+            this.currentPage === 'settings' || 
+            this.currentPage === 'help') return true;
         
         const user = utils.getItem('current_user');
         
@@ -91,6 +102,12 @@ class SmartTimeApp {
                 break;
             case 'calendar':
                 await this.initializeCalendarPage();
+                break;
+            case 'settings':
+                await this.initializeSettingsPage();
+                break;
+            case 'help':
+                await this.initializeHelpPage();
                 break;
         }
     }
@@ -153,6 +170,18 @@ class SmartTimeApp {
         if (window.calendarManager) {
             calendarManager.init();
         }
+    }
+
+    // Ayarlar sayfası başlatma
+    async initializeSettingsPage() {
+        // Settings page doesn't need special initialization
+        console.log('[SmartTime] Ayarlar sayfası başlatıldı');
+    }
+
+    // Yardım sayfası başlatma
+    async initializeHelpPage() {
+        // Help page doesn't need special initialization
+        console.log('[SmartTime] Yardım sayfası başlatıldı');
     }
 
     // Onboarding göster
@@ -516,114 +545,4 @@ class SmartTimeApp {
                 // Position dropdown
                 const rect = this.getBoundingClientRect();
                 userDropdown.style.position = 'fixed';
-                userDropdown.style.top = (rect.bottom + 5) + 'px';
-                userDropdown.style.right = (window.innerWidth - rect.right) + 'px';
-                userDropdown.style.minWidth = rect.width + 'px';
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!userMenu.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.style.display = 'none';
-                }
-            });
-        }
-    }
-
-    // Sayfa yönlendirme
-    navigateTo(page) {
-        console.log('[SmartTime] Yönlendiriliyor:', page);
-        
-        if (page === 'dashboard') {
-            utils.navigateTo('dashboard.html');
-        } else if (page === 'calendar') {
-            utils.navigateTo('calendar.html');
-        } else if (page === 'statistics') {
-            utils.navigateTo('statistics.html');
-        } else if (page === 'interests') {
-            utils.navigateTo('interests.html');
-        } else if (page === 'logout') {
-            authManager.handleLogout();
-        }
-    }
-
-    // Responsive kontrol
-    setupResponsive() {
-        window.addEventListener('resize', () => {
-            this.handleResize();
-        });
-        
-        this.handleResize();
-    }
-
-    handleResize() {
-        const width = window.innerWidth;
-        
-        // Mobile kontrol
-        if (width <= 768 && this.currentPage === 'dashboard') {
-            const sidebar = document.querySelector('.dashboard-sidebar');
-            const overlay = document.querySelector('.overlay');
-            
-            if (sidebar) sidebar.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-        }
-    }
-
-    // Hata yakalama
-    setupErrorHandling() {
-        // Global error handler
-        window.addEventListener('error', (e) => {
-            console.error('[SmartTime] Global error:', e.error);
-            utils.showToast('Bir hata oluştu, lütfen sayfayı yenileyin', 'error');
-        });
-        
-        // Unhandled promise rejection
-        window.addEventListener('unhandledrejection', (e) => {
-            console.error('[SmartTime] Unhandled promise rejection:', e.reason);
-        });
-    }
-
-    // Uygulama durumu
-    getAppState() {
-        return {
-            currentPage: this.currentPage,
-            isInitialized: this.isInitialized,
-            user: authManager.currentUser,
-            plansCount: planManager?.plans?.length || 0
-        };
-    }
-}
-
-// Uygulamayı başlat
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        const app = new SmartTimeApp();
-        
-        // URL hash kontrolü
-        if (window.location.hash === '#login') {
-            utils.setItem('onboarding_completed', true);
-        }
-        
-        console.log('[SmartTime] Uygulama başlatıldı');
-    } catch (error) {
-        console.error('[SmartTime] Uygulama başlatılırken hata:', error);
-        utils.showToast('Uygulama başlatılırken bir hata oluştu', 'error');
-    }
-});
-
-// Yardımcı fonksiyon: Sayfa yüklendiğinde auth formlarını kontrol et
-function initializeAuthFormsOnLoad() {
-    if (window.location.hash === '#login') {
-        const app = window.smartTimeApp;
-        if (app && typeof app.showForm === 'function') {
-            app.showForm('login');
-        }
-    }
-}
-
-// Sayfa yüklendiğinde auth formlarını kontrol et
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeAuthFormsOnLoad);
-} else {
-    initializeAuthFormsOnLoad();
-}
+                userDropdown.s
